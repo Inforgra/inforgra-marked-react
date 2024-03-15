@@ -1,4 +1,4 @@
-ㅠimport type { StorybookConfig } from "@storybook/react-vite";
+import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
   stories: [
@@ -25,4 +25,5 @@ const config: StorybookConfig = {
     defaultName: "Documentation",
   },
 };
+
 export default config;
