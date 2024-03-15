@@ -1,16 +1,13 @@
 import { Tokens } from "marked";
 import Prism, { TokenStream } from "prismjs";
 
-// TODO: 모든 언어를 자동으로 로딩하도록 한다.
-//
-// `prismjs` 에서 지원하는 몇 가지 언어들을 `import` 하여 사용하고 있다.
-// 모든 언어를 자동으로 로딩하도록 추가 할 필요가 있다.
-//
 import "prismjs/components/prism-bash";
 import "prismjs/components/prism-haskell";
 import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-markdown";
 import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-tsx";
 import { Markdown } from "./Markdown";
 
 export const Code = (props: Tokens.Code) => {
