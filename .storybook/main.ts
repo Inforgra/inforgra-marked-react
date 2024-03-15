@@ -1,4 +1,4 @@
-import type { StorybookConfig } from "@storybook/react-vite";
+ㅠimport type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
   stories: [
@@ -14,7 +14,11 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: "@storybook/react-vite",
-    options: {},
+    options: {
+      builder: {
+        viteConfigPath: "vite-sb.config.ts",
+      },
+    },
 },
   docs: {
     autodocs: "tag",
