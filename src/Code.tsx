@@ -11,16 +11,23 @@ import "prismjs/components/prism-haskell";
 import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-markdown";
 import "prismjs/components/prism-typescript";
+import { Markdown } from "./Markdown";
 
 export const Code = (props: Tokens.Code) => {
+  const languages = props.lang === undefined ? "" : props.lang.split(" ");
   return (
+    <>
     <pre className="bg-[#2d2d2d] text-sm text-[#ccc] whitespace-pre rounded-lg p-2">
-      {
-        props.lang !== undefined && Object.keys(Prism.languages).includes(props.lang)
-        ? <RenderPrism code={props.text} language={props.lang} />
-        : <>{props.text}</>
-      }
+    {
+      Object.keys(Prism.languages).includes(languages[0])
+      ? <RenderPrism code={props.text} language={languages[0]} />
+      : <>{props.text}</>
+    }
     </pre>
+    { languages[0] === "markdown"
+      && languages[1] === "preview"
+      && <Markdown markdown={props.text} /> }
+    </>
   );
 }
 
