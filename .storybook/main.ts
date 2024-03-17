@@ -18,7 +18,7 @@ const config: StorybookConfig = {
         viteConfigPath: "vite-sb.config.ts",
       },
     },
-},
+  },
   docs: {
     autodocs: "tag",
     defaultName: "Documentation",

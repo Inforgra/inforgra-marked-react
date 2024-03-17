@@ -16,6 +16,7 @@ import { Strong } from "./Strong";
 import { Table } from "./Table";
 import { Text } from "./Text";
 import { Alert } from "./Alert";
+import { BlockKatex, blockKatex, InlineKatex, inlineKatex } from "./Katex";
 
 const alert: TokenizerExtension = {
   name: 'alert',
@@ -34,7 +35,7 @@ const alert: TokenizerExtension = {
   }
 }
 
-marked.use({ extensions: [ alert ] });
+marked.use({ extensions: [ alert, inlineKatex, blockKatex ] });
 
 export type MarkdownProps = {
   markdown: string;
@@ -87,6 +88,10 @@ const TokenRenderer = (props: TokenRendererProps) => {
       return <Hr />;
     case "html":
       return <Html {...(token as Tokens.HTML)} />;
+    case "inlineKatex":
+      return <InlineKatex {...(token as Tokens.Generic)} />;
+    case "blockKatex":
+      return <BlockKatex {...(token as Tokens.Generic)} />;      
     case "image":
       return <Image {...(token as Tokens.Image)} />;
     case "link":

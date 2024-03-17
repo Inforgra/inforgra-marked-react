@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { Markdown } from "./Markdown";
 
 const meta: Meta = {
-  title: 'Marked-React/Markdown',
+  title: 'inforgra-marked-react/Markdown',
   component: Markdown,
 };
 
@@ -103,6 +103,21 @@ export const Image: Story = {
 
 export const ImageHTML: Story = {
   args: { markdown: "<img src=\"https://mdg.imgix.net/assets/images/san-juan-mountains.jpg\" width=\"200\"/>" },
+}
+
+export const Katex: Story = {
+  args: { markdown: `
+inline example: $ f(a, b, c) = (a^2+b^2+c^2)^3 $.
+
+block example:
+
+$$
+f(\\relax{x}) = \\int_{-\\infty}^\\infty
+                \\hat{f}(\\xi)\\, e^{2 \\pi i \\xi x}
+                \\,d\\xi
+$$
+  `,
+  }
 }
 
 export const Link: Story = {
