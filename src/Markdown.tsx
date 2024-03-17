@@ -1,4 +1,4 @@
-import { marked, Token, Tokens } from "marked";
+import { marked, Token, TokenizerExtension, Tokens } from "marked";
 import { Blockquote } from "./Blockquote";
 import { Code } from "./Code";
 import { Codespan } from "./Codespan";
@@ -15,6 +15,26 @@ import { Space } from "./Space";
 import { Strong } from "./Strong";
 import { Table } from "./Table";
 import { Text } from "./Text";
+import { Alert } from "./Alert";
+
+const alert: TokenizerExtension = {
+  name: 'alert',
+  level: 'inline',
+  tokenizer(src) {
+    const match = src.match(/\[\!([0-9A-Za-z]+)\]/);
+    if (match) {
+      return {
+        type: 'alert',
+        raw: match[0],
+        text: match[1],
+        tokens: [],
+      }
+    }
+    return undefined;
+  }
+}
+
+marked.use({ extensions: [ alert ] });
 
 export type MarkdownProps = {
   markdown: string;
@@ -49,6 +69,8 @@ type TokenRendererProps = {
 const TokenRenderer = (props: TokenRendererProps) => {
   const { token } = props;
   switch (token.type) {
+    case "alert":
+      return <Alert {...(token as Tokens.Generic)} />;
     case "blockquote":
       return <Blockquote {...(token as Tokens.Blockquote)} />;
     case "code":

@@ -12,6 +12,25 @@ export const Blockquote: Story = {
   args: { markdown: "> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인" },
 }
 
+export const BlockquoteAlert: Story = {
+  args: { markdown: `
+> [!NOTE]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+
+> [!TIP]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+
+> [!IMPORTANT]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+
+> [!WARNING]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+
+> [!CAUTION]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+  `},
+}
+
 export const Code: Story = {
   args: { markdown: "```\nCode Sample\n```" },
 }

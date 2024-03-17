@@ -1,9 +1,25 @@
 import { Tokens } from "marked";
 import { Renderer } from "./Markdown";
+import clsx from "clsx";
 
 export const Blockquote = ({ tokens }: Tokens.Blockquote) => {
+  let alert = undefined;
+  if (tokens[0].type === 'paragraph') {
+    let paragraph = tokens[0] as Tokens.Paragraph
+    if (paragraph.tokens[0].type === "alert") {
+      alert = paragraph.tokens[0].text;
+    }
+  }
   return (
-    <blockquote className="pt-1 pb-2 pl-2 my-4 border-s-4 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-300">
+    <blockquote className={clsx(
+      "pt-1 pb-2 pl-2 my-4 border-s-4",
+      { "border-gray-400"   : alert === undefined  },
+      { "border-blue-400"   : alert === "NOTE"  },
+      { "border-green-400"  : alert === "TIP"  },
+      { "border-purple-400" : alert === "IMPORTANT"  },
+      { "border-orange-400" : alert === "WARNING"  },
+      { "border-red-400"    : alert === "CAUTION"  },
+    )}>
       <Renderer tokens={tokens} />
     </blockquote>
   );
