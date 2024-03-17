@@ -15,25 +15,8 @@ import { Space } from "./Space";
 import { Strong } from "./Strong";
 import { Table } from "./Table";
 import { Text } from "./Text";
-import { Alert } from "./Alert";
+import { Alert, alert } from "./Alert";
 import { BlockKatex, blockKatex, InlineKatex, inlineKatex } from "./Katex";
-
-const alert: TokenizerExtension = {
-  name: 'alert',
-  level: 'inline',
-  tokenizer(src) {
-    const match = src.match(/\[\!([0-9A-Za-z]+)\]/);
-    if (match) {
-      return {
-        type: 'alert',
-        raw: match[0],
-        text: match[1],
-        tokens: [],
-      }
-    }
-    return undefined;
-  }
-}
 
 marked.use({ extensions: [ alert, inlineKatex, blockKatex ] });
 

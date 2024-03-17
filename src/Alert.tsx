@@ -1,4 +1,22 @@
-import { Tokens } from "marked";
+import { TokenizerExtension, Tokens } from "marked";
+
+export const alert: TokenizerExtension = {
+  name: 'alert',
+  level: 'inline',
+  tokenizer(src) {
+    const match = src.match(/\[\!([0-9A-Za-z]+)\]/);
+    if (match) {
+      return {
+        type: 'alert',
+        raw: match[0],
+        text: match[1],
+        tokens: [],
+      }
+    }
+    return undefined;
+  }
+}
+
 
 export const Alert = (props: Tokens.Generic) => {
   return (
