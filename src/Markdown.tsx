@@ -17,17 +17,34 @@ import { Table } from "./Table";
 import { Text } from "./Text";
 import { Alert, alert } from "./Alert";
 import { BlockKatex, blockKatex, InlineKatex, inlineKatex } from "./Katex";
+import { Footnote, footnote, FootnoteRef, footnoteRef } from "./Footnote";
+import { TokensFootnote, TokensFootnoteRef } from "./index.d";
 
-marked.use({ extensions: [ alert, inlineKatex, blockKatex ] });
+marked.use({ extensions: [
+  alert,
+  inlineKatex,
+  blockKatex,
+  footnoteRef,
+  footnote,
+] });
+
+export let footnotes: TokensFootnote[] = [];
 
 export type MarkdownProps = {
   markdown: string;
 }
 
 export const Markdown = ({ markdown }: MarkdownProps) => {
+  footnotes = [];
   const tokens = marked.Lexer.lex(markdown) as Token[];
+  footnotes.sort((a, b) => (a.id > b.id));
   return (
+    <>
     <Renderer tokens={tokens} />
+    <div className="border-t pt-6 mt-6 text-[0.8rem] text-gray-900">
+    { footnotes.map((footnote, index) => <Footnote key={index} {...footnote} />) }
+      </div>
+    </>
   );
 }
 
@@ -65,6 +82,10 @@ const TokenRenderer = (props: TokenRendererProps) => {
       return <Codespan {...(token as Tokens.Codespan)} />;
     case "em":
       return <Em {...(token as Tokens.Em)} />;
+    case "footnote":
+      return;
+    case "footnoteRef":
+      return <FootnoteRef {...(token as TokensFootnoteRef)} />;
     case "heading":
       return <Heading {...(token as Tokens.Heading)} />;
     case "hr":
@@ -74,7 +95,7 @@ const TokenRenderer = (props: TokenRendererProps) => {
     case "inlineKatex":
       return <InlineKatex {...(token as Tokens.Generic)} />;
     case "blockKatex":
-      return <BlockKatex {...(token as Tokens.Generic)} />;      
+      return <BlockKatex {...(token as Tokens.Generic)} />;
     case "image":
       return <Image {...(token as Tokens.Image)} />;
     case "link":

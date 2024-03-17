@@ -85,6 +85,19 @@ export const Em: Story = {
   args: { markdown: "**Em**" },
 }
 
+export const Footnote: Story = {
+  args: { markdown: `
+Here is a simple footnote[^1].
+
+A footnote can also have multiple lines[^2].
+
+[^1]: My reference.
+
+[^2]: To add line breaks within a footnote, prefix new lines with 2 spaces.
+  This is a second line. [naver](https://www.naver.com) **good**
+  `},
+}
+
 export const Heading: Story = {
   args: { markdown: "# Heading1\n## Heading2\n### Heading3\n#### Heading4\n##### Heading5\n###### Heading6\n" },
 }
