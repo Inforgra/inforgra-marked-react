@@ -18,7 +18,7 @@ export async function loader() {
 export default function Index() {
   const { readme } = useLoaderData<typeof loader>();
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto p-8">
       <Markdown markdown={readme} />
     </div>
   );

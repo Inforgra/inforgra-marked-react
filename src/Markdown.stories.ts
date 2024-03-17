@@ -13,7 +13,45 @@ export const Blockquote: Story = {
 }
 
 export const Code: Story = {
-  args: { markdown: "```markdown\n# Heading1\n## Heading2\n### Heading3\n```" },
+  args: { markdown: "```\nCode Sample\n```" },
+}
+
+export const CodeFilename: Story = {
+  args: { markdown: "```filename=README.md\nCode Sample\n```" },
+}
+
+export const CodeLinenumbers: Story = {
+  args: { markdown: "```linenumbers\nFirst\nSecond\nThird\n\n```" },
+}
+
+export const CodePrismBash: Story = {
+  args: { markdown: "```bash\ncat /dev/proc/cpuinfo\n```" },
+}
+
+export const CodePrismHaskell: Story = {
+  args: { markdown: `
+\`\`\`haskell linenumbers
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) =
+  let smallerSorted = quicksort [a | a <- xs, a <= x]
+      biggerSorted = quicksort [a | a <- xs, a > x]
+  in  smallerSorted ++ [x] ++ biggerSorted
+\`\`\`
+  ` },
+}
+
+export const CodePrismMarkdown: Story = {
+  args: { markdown: `
+\`\`\`markdown filename=README.md preview
+# Heading1
+## Heading2
+### Heading3
+\`\`\`` },
+}
+
+export const CodePrismTsx: Story = {
+  args: { markdown: "```tsx filename=src/App.tsx linenumbers\nimport { Markdown } from \"inforgra-marked-react\";\n\nexport const App() => {\n  return (<>Hello World!!!</>);\n}\n```" },
 }
 
 export const Del: Story = {
@@ -77,7 +115,12 @@ export const Paragraph: Story = {
 }
 
 export const Table: Story = {
-  args: { markdown: "| Default | Left | Center | Right |\n|---|:---|:---:|---:|\n| Row | Row | Row | Row |\n| Row | Row | Row | Row |\n" },
+  args: { markdown: `
+| Default | Left | Center | Right |
+|---|:---|:---:|---:|
+| Row | Row | Row | Row |
+| Row | Row | Row | Row |`
+  },
 }
 
 export default meta;
