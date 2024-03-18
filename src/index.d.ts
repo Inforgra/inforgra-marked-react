@@ -1,5 +1,11 @@
 import { Token } from "marked";
 
+export type TokensAlert = {
+  type: "alert";
+  raw: string;
+  name: string;
+}
+
 export type TokensFootnoteRef = {
   type: "footnoteRef",
   raw: string,

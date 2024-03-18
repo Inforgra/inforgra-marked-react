@@ -1,13 +1,17 @@
-import { marked, Token, TokenizerExtension, Tokens } from "marked";
+import { marked, Token, Tokens } from "marked";
+import { Alert, alert } from "./Alert";
 import { Blockquote } from "./Blockquote";
 import { Code } from "./Code";
 import { Codespan } from "./Codespan";
 import { Del } from "./Del";
 import { Em } from "./Em";
+import { footnote, FootnoteRef, footnoteRef, Footnotes, resetFootnotes } from "./Footnote";
 import { Heading } from "./Heading";
 import { Hr } from "./Hr";
 import { Html } from "./Html";
 import { Image } from "./Image";
+import { TokensFootnoteRef } from "./index.d";
+import { BlockKatex, blockKatex, InlineKatex, inlineKatex } from "./Katex";
 import { Link } from "./Link";
 import { List } from "./List";
 import { Paragraph } from "./Paragraph";
@@ -15,10 +19,6 @@ import { Space } from "./Space";
 import { Strong } from "./Strong";
 import { Table } from "./Table";
 import { Text } from "./Text";
-import { Alert, alert } from "./Alert";
-import { BlockKatex, blockKatex, InlineKatex, inlineKatex } from "./Katex";
-import { Footnote, footnote, FootnoteRef, footnoteRef } from "./Footnote";
-import { TokensFootnote, TokensFootnoteRef } from "./index.d";
 
 marked.use({ extensions: [
   alert,
@@ -28,36 +28,30 @@ marked.use({ extensions: [
   footnote,
 ] });
 
-export let footnotes: TokensFootnote[] = [];
-
 export type MarkdownProps = {
   markdown: string;
 }
 
 export const Markdown = ({ markdown }: MarkdownProps) => {
-  footnotes = [];
+  resetFootnotes();
   const tokens = marked.Lexer.lex(markdown) as Token[];
-  footnotes.sort((a, b) => (a.id > b.id));
   return (
     <>
-    <Renderer tokens={tokens} />
-    <div className="border-t pt-6 mt-6 text-[0.8rem] text-gray-900">
-    { footnotes.map((footnote, index) => <Footnote key={index} {...footnote} />) }
-      </div>
+      <Renderer tokens={tokens} showParagraph={true} />
     </>
   );
 }
 
 type RendererProps = {
   tokens: Token[];
+  showParagraph?: boolean;
 }
 
-export const Renderer = (props: RendererProps) => {
-  const { tokens } = props;
+export const Renderer = ({tokens, showParagraph = true}: RendererProps) => {
   return (
     <>{
       tokens.map((token, index) => {
-        return <TokenRenderer key={index} token={token} />
+        return <TokenRenderer key={index} token={token} showParagraph={showParagraph} />
       })
     }</>
   );
@@ -65,15 +59,16 @@ export const Renderer = (props: RendererProps) => {
 
 type TokenRendererProps = {
   token: Token;
+  showParagraph?: boolean;
 }
 
 const TokenRenderer = (props: TokenRendererProps) => {
-  const { token } = props;
+  const { token, showParagraph } = props;
   switch (token.type) {
     case "alert":
-      return <Alert {...(token as Tokens.Generic)} />;
+      return <Alert {...token} />;
     case "blockquote":
-      return <Blockquote {...(token as Tokens.Blockquote)} />;
+      return <Blockquote {...token} />;
     case "code":
       return <Code {...(token as Tokens.Code)} />;
     case "del":
@@ -103,7 +98,7 @@ const TokenRenderer = (props: TokenRendererProps) => {
     case "list":
       return <List {...(token as Tokens.List)} />;
     case "paragraph":
-      return <Paragraph {...(token as Tokens.Paragraph)} />;
+      return <Paragraph token={token as Tokens.Paragraph} showParagraph={showParagraph} />;
     case "space":
       return <Space />
     case "strong":

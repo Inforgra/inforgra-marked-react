@@ -1,4 +1,5 @@
-import { TokenizerExtension, Tokens } from "marked";
+import { Token, TokenizerExtension } from "marked";
+import { TokensAlert } from "./index.d";
 
 export const alert: TokenizerExtension = {
   name: 'alert',
@@ -9,23 +10,22 @@ export const alert: TokenizerExtension = {
       return {
         type: 'alert',
         raw: match[0],
-        text: match[1],
-        tokens: [],
-      }
+        name: match[1],
+      } as TokensAlert;
     }
     return undefined;
   }
 }
 
-
-export const Alert = (props: Tokens.Generic) => {
+export const Alert = (props: Token) => {
+  const { name } = props as TokensAlert;
   return (
     <span className="flex">
-      { props.raw === "[!NOTE]" && <><NoteIcon /><span className="font-bold text-blue-400 m-1">{props.text}</span></> }
-      { props.raw === "[!TIP]" && <><LampChargeIcon /><span className="font-bold text-green-400 m-1">{props.text}</span></> }
-      { props.raw === "[!IMPORTANT]" && <><ImportantIcon /><span className="font-bold text-purple-400 m-1">{props.text}</span></> }
-      { props.raw === "[!WARNING]" && <><WarningIcon /><span className="font-bold text-orange-400 m-1">{props.text}</span></> }
-      { props.raw === "[!CAUTION]" && <><Warning2Icon /><span className="font-bold text-red-400 m-1">{props.text}</span></> }
+      { name === "NOTE" && <><NoteIcon /><span className="font-bold text-blue-400 m-1">{name}</span></> }
+      { name === "TIP" && <><LampChargeIcon /><span className="font-bold text-green-400 m-1">{name}</span></> }
+      { name === "IMPORTANT" && <><ImportantIcon /><span className="font-bold text-purple-400 m-1">{name}</span></> }
+      { name === "WARNING" && <><WarningIcon /><span className="font-bold text-orange-400 m-1">{name}</span></> }
+      { name === "CAUTION" && <><Warning2Icon /><span className="font-bold text-red-400 m-1">{name}</span></> }
     </span>
   )
 }

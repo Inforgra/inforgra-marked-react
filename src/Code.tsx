@@ -24,7 +24,7 @@ export const Code = (props: Tokens.Code) => {
   }
 
   return (
-    <div className="relative overflow-auto border-2 rounded-lg shadow-md mt-4">
+    <div className="relative overflow-auto border-2 rounded-lg shadow-md mb-8">
       {
         filename
         && (
@@ -36,13 +36,15 @@ export const Code = (props: Tokens.Code) => {
           </div>
         )
       }
-      <pre className="flex p-4 text-sm">
+      { language === "markdown"
+        && preview
+        && <div className="bg-white dark:bg-gray-200 border p-2"><Markdown markdown={props.text} /></div> }
+      <pre className="flex p-4">
         { linenumbers && <span className="flex flex-col border-r px-2 mr-2 text-right text-gray-400">{props.text.split("\n").map((_, index) => <span key={index}>{index+1}</span>)}</span> }
         <code className="">
           { language && <RenderPrism code={props.text} language={language} /> || <>{props.text}</> }
         </code>
       </pre>
-      { language === "markdown" && preview && <div className="bg-white dark:bg-gray-200 border rounded-b-lg p-2"><Markdown markdown={props.text} /></div> }
       <button className="absolute top-0 right-0 mt-2 mr-2" onClick={handleCopy}>
         {
           isCopied
@@ -74,7 +76,7 @@ export const Code = (props: Tokens.Code) => {
       </button>
     </div>
   );
-      }
+}
 
 const parseProps = (props: Tokens.Code) => {
   let language = undefined;
