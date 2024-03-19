@@ -5,11 +5,41 @@ import * as MarkdownStories from "./Markdown.stories.ts";
 
 ## Blockquote
 
-<Canvas of={MarkdownStories.Blockquote} withToolbar="true" />
+<Canvas of={MarkdownStories.Blockquote} />
+
+### Alert
+
+<Canvas of={MarkdownStories.BlockquoteAlert} />
 
 ## Code
 
 <Canvas of={MarkdownStories.Code} />
+
+### filename
+
+<Canvas of={MarkdownStories.CodeFilename} />
+
+### line numbers
+
+<Canvas of={MarkdownStories.CodeLinenumbers} />
+
+### syntax highlight - Prismjs
+
+#### bash
+
+<Canvas of={MarkdownStories.CodePrismBash} />
+
+#### haskell
+
+<Canvas of={MarkdownStories.CodePrismHaskell} />
+
+#### markdown
+
+<Canvas of={MarkdownStories.CodePrismMarkdown} />
+
+#### tsx
+
+<Canvas of={MarkdownStories.CodePrismTsx} />
 
 ## Codespan
 
@@ -22,6 +52,10 @@ import * as MarkdownStories from "./Markdown.stories.ts";
 ## Em
 
 <Canvas of={MarkdownStories.Em} />
+
+## Footnote
+
+<Canvas of={MarkdownStories.Footnote} />
 
 ## Heading
 
@@ -42,6 +76,10 @@ import * as MarkdownStories from "./Markdown.stories.ts";
 ## Image HTML
 
 <Canvas of={MarkdownStories.ImageHTML} />
+
+## Katex
+
+<Canvas of={MarkdownStories.Katex} />
 
 ## Link
 

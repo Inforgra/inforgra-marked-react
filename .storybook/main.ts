@@ -6,7 +6,6 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   addons: [
-    "@storybook/addon-onboarding",
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@chromatic-com/storybook",
@@ -14,11 +13,16 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: "@storybook/react-vite",
-    options: {},
-},
+    options: {
+      builder: {
+        viteConfigPath: "vite-sb.config.ts",
+      },
+    },
+  },
   docs: {
     autodocs: "tag",
     defaultName: "Documentation",
   },
 };
+
 export default config;

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { Markdown } from "./Markdown";
 
 const meta: Meta = {
-  title: 'Marked-React/Markdown',
+  title: 'inforgra-marked-react/Markdown',
   component: Markdown,
 };
 
@@ -12,8 +12,65 @@ export const Blockquote: Story = {
   args: { markdown: "> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인" },
 }
 
+export const BlockquoteAlert: Story = {
+  args: { markdown: `
+> [!NOTE]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+
+> [!TIP]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+
+> [!IMPORTANT]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+
+> [!WARNING]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+
+> [!CAUTION]
+> Everything should be made as simple as possible, but not simpler - 알버트 아인슈타인
+  `},
+}
+
 export const Code: Story = {
-  args: { markdown: "```markdown\n# Heading1\n## Heading2\n### Heading3\n```" },
+  args: { markdown: "```\nCode Sample\n```" },
+}
+
+export const CodeFilename: Story = {
+  args: { markdown: "```filename=README.md\nCode Sample\n```" },
+}
+
+export const CodeLinenumbers: Story = {
+  args: { markdown: "```linenumbers\nFirst\nSecond\nThird\n\n```" },
+}
+
+export const CodePrismBash: Story = {
+  args: { markdown: "```bash\ncat /dev/proc/cpuinfo\n```" },
+}
+
+export const CodePrismHaskell: Story = {
+  args: { markdown: `
+\`\`\`haskell linenumbers
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) =
+  let smallerSorted = quicksort [a | a <- xs, a <= x]
+      biggerSorted = quicksort [a | a <- xs, a > x]
+  in  smallerSorted ++ [x] ++ biggerSorted
+\`\`\`
+  ` },
+}
+
+export const CodePrismMarkdown: Story = {
+  args: { markdown: `
+\`\`\`markdown filename=README.md preview
+# Heading1
+## Heading2
+### Heading3
+\`\`\`` },
+}
+
+export const CodePrismTsx: Story = {
+  args: { markdown: "```tsx filename=src/App.tsx linenumbers\nimport { Markdown } from \"inforgra-marked-react\";\n\nexport const App() => {\n  return (<>Hello World!!!</>);\n}\n```" },
 }
 
 export const Del: Story = {
@@ -26,6 +83,21 @@ export const Codespan: Story = {
 
 export const Em: Story = {
   args: { markdown: "**Em**" },
+}
+
+export const Footnote: Story = {
+  args: { markdown: `
+Here is a simple footnote[^1].
+
+A footnote can also have multiple lines[^2].
+
+[^1]: My reference.
+
+[^2]: To add line breaks within a footnote, prefix new lines with 2 spaces.
+
+  This is a second line.
+
+  `},
 }
 
 export const Heading: Story = {
@@ -46,6 +118,21 @@ export const Image: Story = {
 
 export const ImageHTML: Story = {
   args: { markdown: "<img src=\"https://mdg.imgix.net/assets/images/san-juan-mountains.jpg\" width=\"200\"/>" },
+}
+
+export const Katex: Story = {
+  args: { markdown: `
+inline example: $ f(a, b, c) = (a^2+b^2+c^2)^3 $.
+
+block example:
+
+$$
+f(\\relax{x}) = \\int_{-\\infty}^\\infty
+                \\hat{f}(\\xi)\\, e^{2 \\pi i \\xi x}
+                \\,d\\xi
+$$
+  `,
+  }
 }
 
 export const Link: Story = {
@@ -77,7 +164,12 @@ export const Paragraph: Story = {
 }
 
 export const Table: Story = {
-  args: { markdown: "| Default | Left | Center | Right |\n|---|:---|:---:|---:|\n| Row | Row | Row | Row |\n| Row | Row | Row | Row |\n" },
+  args: { markdown: `
+| Default | Left | Center | Right |
+|---|:---|:---:|---:|
+| Row | Row | Row | Row |
+| Row | Row | Row | Row |`
+  },
 }
 
 export default meta;
