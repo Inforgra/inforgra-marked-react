@@ -20,4 +20,12 @@ export type TokensFootnote = {
   tokens: Token[],
 }
 
+export type TokensHighlight = {
+  type: "highlight",
+  raw: string,
+  id: string,
+  tokens: Token[],
+}
+
+
 export { Markdown } from "./Markdown";

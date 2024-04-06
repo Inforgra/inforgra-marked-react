@@ -104,6 +104,10 @@ export const Heading: Story = {
   args: { markdown: "# Heading1\n## Heading2\n### Heading3\n#### Heading4\n##### Heading5\n###### Heading6\n" },
 }
 
+export const Highlight: Story = {
+  args: { markdown: "This is ==highlight text==." },
+}
+
 export const Hr: Story = {
   args: { markdown: "---" },
 }

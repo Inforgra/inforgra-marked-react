@@ -10,7 +10,7 @@ import { Heading } from "./Heading";
 import { Hr } from "./Hr";
 import { Html } from "./Html";
 import { Image } from "./Image";
-import { TokensFootnoteRef } from "./index.d";
+import { TokensFootnoteRef, TokensHighlight } from "./index.d";
 import { BlockKatex, blockKatex, InlineKatex, inlineKatex } from "./Katex";
 import { Link } from "./Link";
 import { List } from "./List";
@@ -19,6 +19,7 @@ import { Space } from "./Space";
 import { Strong } from "./Strong";
 import { Table } from "./Table";
 import { Text } from "./Text";
+import { inlineHighlight, Highlight } from "./Highlight";
 
 marked.use({ extensions: [
   alert,
@@ -26,6 +27,7 @@ marked.use({ extensions: [
   blockKatex,
   footnoteRef,
   footnote,
+  inlineHighlight,
 ] });
 
 export type MarkdownProps = {
@@ -35,6 +37,7 @@ export type MarkdownProps = {
 export const Markdown = ({ markdown }: MarkdownProps) => {
   resetFootnotes();
   const tokens = marked.Lexer.lex(markdown) as Token[];
+  console.log(tokens);
   return (
     <>
       <Renderer tokens={tokens} showParagraph={true} />
@@ -83,6 +86,8 @@ const TokenRenderer = (props: TokenRendererProps) => {
       return <FootnoteRef {...(token as TokensFootnoteRef)} />;
     case "heading":
       return <Heading {...(token as Tokens.Heading)} />;
+    case "highlight":
+      return <Highlight {...(token as TokensHighlight)} />;
     case "hr":
       return <Hr />;
     case "html":
