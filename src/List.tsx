@@ -5,7 +5,7 @@ const ListItem = (props: Tokens.ListItem) => {
   const { task, checked, text } = props;
   const tokens = Lexer.lex(text);
   return (
-    <li className="ml-6">
+    <li className="ml-6 mb-1">
       <Renderer tokens={tokens} showParagraph={false} />
     </li>
   );
@@ -15,13 +15,13 @@ export const List = (props: Tokens.List) => {
   const { ordered, items, start } = props;
   if (ordered) {
     return (
-      <ol className="list-decimal mb-1">
+      <ol className="list-decimal mb-5">
         { items.map((item, index) => <ListItem key={index} {...item} />) }
       </ol>
     );
   } else {
     return (
-      <ul className="list-disc mb-1">
+      <ul className="list-disc mb-5">
         { items.map((item, index) => <ListItem key={index} {...item} />) }
       </ul>
     );

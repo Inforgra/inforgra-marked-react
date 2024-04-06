@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import fm from "front-matter";
 import { readFile } from "fs/promises";
-import { Markdown } from "inforgra-marked-react/Markdown";
+import { Markdown } from "inforgra-react-markdown/Markdown";
 
 export const meta: MetaFunction = () => {
   return [

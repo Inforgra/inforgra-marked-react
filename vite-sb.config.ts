@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "src/index.ts",
-      name: "inforgra-marked-react",
+      name: "inforgra-react-markdown",
       formats: ["es", "cjs", "umd"],
       fileName: "index",
     },

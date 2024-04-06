@@ -34,7 +34,7 @@ export const FootnoteRef = (props: TokensFootnoteRef) => {
   const { id, label } = props;
   return (
     <sup>
-      <a href={`#footnote-${id}`} id={`footnote-ref-${id}`} className="text-blue-800 hover:text-blue-600 ml-1">
+      <a href={`#footnote-${id}`} id={`footnote-ref-${id}`} className="ml-1 text-blue-800 hover:text-blue-600 dark:text-blue-300 dark:hover:text-blue-100">
         [{label}]
       </a>
     </sup>
@@ -78,7 +78,7 @@ export const Footnote = (props: TokensFootnote) => {
 }
 
 export const Footnotes = () => {
-  footnotes.sort((a, b) => (a.id > b.id));
+  footnotes.sort((a, b) => (a.id > b.id) ? 1 : 0);
   if (footnotes.length === 0) {
     return (<></>);
   }

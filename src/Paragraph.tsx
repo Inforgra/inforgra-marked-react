@@ -10,7 +10,7 @@ export const Paragraph = ({token, showParagraph=true}: ParagraphProps) => {
   const { text, tokens } = token;
   if (showParagraph) {
     return (
-      <p className="pb-2">{
+      <p className="leading-[1.5rem] pb-4">{
         tokens.length === 0
         ? text
         : <Renderer tokens={tokens} showParagraph={showParagraph}/>

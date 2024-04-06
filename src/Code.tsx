@@ -1,3 +1,4 @@
+import React from "react";
 import copy from "copy-to-clipboard";
 import { Tokens } from "marked";
 import Prism, { TokenStream } from "prismjs";
@@ -8,14 +9,49 @@ import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-markdown";
 import "prismjs/components/prism-tsx";
 import "prismjs/components/prism-typescript";
-import { useState } from "react";
 import { Markdown } from "./Markdown";
 
 export const Code = (props: Tokens.Code) => {
 
   const { language, filename, preview, linenumbers } = parseProps(props);
 
-  const [isCopied, setIsCopied] = useState(false);
+  return (
+    <div className="border-2 rounded-lg shadow-md mb-8">
+      {
+        filename
+        && (
+          <div className="flex border-b p-2">
+            <svg className="w-6 h-6 text-neutral-900 dark:text-neutral-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 3H5V21H19V9M13 3H14L19 8V9M13 3V7C13 8 14 9 15 9H19" />
+            </svg>
+            <span className="grow font-bold text-gray-900 dark:text-neutral-200">{filename}</span>
+            <div className="justify-self-end">
+              <Copy text={props.text} />
+            </div>
+          </div>
+        )
+      }
+      { language === "markdown"
+        && preview
+        && <div className="bg-white dark:bg-gray-200 border p-2"><Markdown markdown={props.text} /></div> }
+      <div className="flex flex-row">
+        { linenumbers && <span className="flex flex-col border-r px-2 py-4 mr-2 text-right text-gray-400">{props.text.split("\n").map((_, index) => <span key={index}>{index+1}</span>)}</span> }
+        <pre className="grow p-4 overflow-auto">
+            { language && <RenderPrism code={props.text} language={language} /> || <>{props.text}</> }
+        </pre>
+        { !filename && <div className="p-2"><Copy text={props.text} /></div> }
+      </div>
+    </div>
+  );
+}
+
+type CopyProps = {
+  text: string;
+}
+
+const Copy = (props: CopyProps) => {
+
+  const [isCopied, setIsCopied] = React.useState(false);
 
   const handleCopy = () => {
     copy(props.text);
@@ -24,28 +60,8 @@ export const Code = (props: Tokens.Code) => {
   }
 
   return (
-    <div className="relative overflow-auto border-2 rounded-lg shadow-md mb-8">
-      {
-        filename
-        && (
-          <div className="flex border-b p-2">
-            <svg className="w-6 h-6 text-gray-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13 3H5V21H19V9M13 3H14L19 8V9M13 3V7C13 8 14 9 15 9H19" />
-            </svg>
-            <span className="font-bold text-gray-900">{filename}</span>
-          </div>
-        )
-      }
-      { language === "markdown"
-        && preview
-        && <div className="bg-white dark:bg-gray-200 border p-2"><Markdown markdown={props.text} /></div> }
-      <pre className="flex p-4">
-        { linenumbers && <span className="flex flex-col border-r px-2 mr-2 text-right text-gray-400">{props.text.split("\n").map((_, index) => <span key={index}>{index+1}</span>)}</span> }
-        <code className="">
-          { language && <RenderPrism code={props.text} language={language} /> || <>{props.text}</> }
-        </code>
-      </pre>
-      <button className="absolute top-0 right-0 mt-2 mr-2" onClick={handleCopy}>
+    <div className="">
+      <button onClick={handleCopy}>
         {
           isCopied
           ? <svg className="w-6 h-6 text-gray-100 fill-blue-400"
@@ -61,7 +77,7 @@ export const Code = (props: Tokens.Code) => {
             <path d="M6.08008 15L8.03008 16.95L11.9201 13.05" />
           </svg>
 
-          : <svg className="w-6 h-6 text-gray-500 hover:text-gray-800"
+          : <svg className="w-6 h-6 text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
                  viewBox="0 0 24 24"
                  fill="none"
                  stroke="currentColor"
@@ -124,7 +140,7 @@ type RenderPrismTokensProps = {
 
 const RenderPrismToken = ({ token }: RenderPrismTokensProps) => {
   if (typeof token === 'string') {
-    return <span>{token}</span>;
+    return <>{token}</>;
   } else if (token instanceof Array) {
     return token.map((token, index) => (
       <RenderPrismToken key={index} token={token} />
@@ -172,7 +188,7 @@ const RenderPrismToken = ({ token }: RenderPrismTokensProps) => {
       case 'url':
         return <span className="text-[#51afef]"><RenderPrismToken token={token.content} /></span>;
       default:
-        return <span className="text-gray-900">{token.content}</span>;
+        return <RenderPrismToken token={token.content} />
     }
   }
 }

@@ -19,3 +19,5 @@ export type TokensFootnote = {
   id: string,
   tokens: Token[],
 }
+
+export { Markdown } from "./Markdown";

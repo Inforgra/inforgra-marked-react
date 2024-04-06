@@ -33,7 +33,8 @@ export const inlineKatex: TokenizerExtension = {
     const match = src.match(inlineStartRule);
     if (!match)
       return;
-    const possibleKatex = src.substring(match.index);
+    let index = match.index || 0;
+    const possibleKatex = src.substring(index);
     if (possibleKatex.match(inlineRule)) {
       return match.index;
     }
@@ -53,20 +54,14 @@ export const inlineKatex: TokenizerExtension = {
   },
 }
 
-const options = {
-  displayMode: true,
-  output: "mathml",
-  throwOnError: false,
-}
-
 export const InlineKatex = (props: Tokens.Generic) => {
   const { text } = props;
-  let html = undefined;
+  let html = "";
   try {
-    html = katex.renderToString(text, { ...options, displayMode: false });
+    html = katex.renderToString(text, { displayMode: false, output: "mathml", throwOnError: false });
   } catch (e) {
     if (e instanceof katex.ParseError) {
-      html = "Error in LaTeX '" + text + "': " + e.message;
+      html = "Error in LaTeX '" + text;
     }
   }
   return (
@@ -77,12 +72,12 @@ export const InlineKatex = (props: Tokens.Generic) => {
 
 export const BlockKatex = (props: Tokens.Generic) => {
   const { text } = props;
-  let html;
+  let html = "";
   try {
-    html = katex.renderToString(text, options);
+    html = katex.renderToString(text, { displayMode: true, output: "mathml", throwOnError: false });
   } catch (e) {
     if (e instanceof katex.ParseError) {
-      html = "Error in LaTeX '" + text + "': " + e.message;
+      html = "Error in LaTeX '" + text;
     } else {
       throw e;
     }
