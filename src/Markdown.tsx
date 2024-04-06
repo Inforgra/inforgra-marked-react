@@ -10,7 +10,7 @@ import { Heading } from "./Heading";
 import { Hr } from "./Hr";
 import { Html } from "./Html";
 import { Image } from "./Image";
-import { TokensFootnoteRef, TokensHighlight } from "./index.d";
+import { TokensFootnoteRef, TokensHighlight, TokensTabbed } from "./index.d";
 import { BlockKatex, blockKatex, InlineKatex, inlineKatex } from "./Katex";
 import { Link } from "./Link";
 import { List } from "./List";
@@ -20,6 +20,7 @@ import { Strong } from "./Strong";
 import { Table } from "./Table";
 import { Text } from "./Text";
 import { inlineHighlight, Highlight } from "./Highlight";
+import { blockTabbed, Tabbed } from "./Tabbed";
 
 marked.use({ extensions: [
   alert,
@@ -28,6 +29,7 @@ marked.use({ extensions: [
   footnoteRef,
   footnote,
   inlineHighlight,
+  blockTabbed,
 ] });
 
 export type MarkdownProps = {
@@ -108,6 +110,8 @@ const TokenRenderer = (props: TokenRendererProps) => {
       return <Space />
     case "strong":
       return <Strong {...(token as Tokens.Strong)} />;
+    case "tabbed":
+      return <Tabbed {...(token as TokensTabbed)} />;
     case "table":
       return <Table {...(token as Tokens.Table)} />;
     case "text":

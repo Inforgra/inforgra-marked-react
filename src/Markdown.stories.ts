@@ -167,6 +167,10 @@ export const Paragraph: Story = {
   args: { markdown: "첫번째 문장.\n두번째 문장\n세번째 문장.\n\n새로운 문단과 문장.\n이어진 문장.\n" },
 }
 
+export const Tabbed: Story = {
+  args: { markdown: "this is tabbed example.\n===tab1\n  content1\n===tab2\n  content2\nmore lines" },
+}
+
 export const Table: Story = {
   args: { markdown: `
 | Default | Left | Center | Right |

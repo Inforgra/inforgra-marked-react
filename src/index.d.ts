@@ -23,9 +23,18 @@ export type TokensFootnote = {
 export type TokensHighlight = {
   type: "highlight",
   raw: string,
-  id: string,
   tokens: Token[],
 }
 
+export type TokensTabbed = {
+  type: "tabs",
+  raw: string,
+  tabs: Tab[],
+}
+
+export type Tab = {
+  name: string,
+  tokens: Token[]
+}
 
 export { Markdown } from "./Markdown";
