@@ -39,7 +39,6 @@ export type MarkdownProps = {
 export const Markdown = ({ markdown }: MarkdownProps) => {
   resetFootnotes();
   const tokens = marked.Lexer.lex(markdown) as Token[];
-  console.log(tokens);
   return (
     <>
       <Renderer tokens={tokens} showParagraph={true} />

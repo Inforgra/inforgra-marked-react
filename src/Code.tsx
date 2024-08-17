@@ -10,10 +10,11 @@ import "prismjs/components/prism-markdown";
 import "prismjs/components/prism-tsx";
 import "prismjs/components/prism-typescript";
 import { Markdown } from "./Markdown";
+import clsx from "clsx";
 
 export const Code = (props: Tokens.Code) => {
 
-  const { language, filename, preview, linenumbers } = parseProps(props);
+  const { language, filename, preview, linenumbers, font } = parseProps(props);
 
   return (
     <div className="border-2 rounded-lg shadow-md mb-8">
@@ -35,14 +36,19 @@ export const Code = (props: Tokens.Code) => {
         && preview
         && <div className="bg-white dark:bg-gray-200 border p-2"><Markdown markdown={props.text} /></div> }
       <div className="flex flex-row">
-        { linenumbers && <span className="flex flex-col border-r px-2 py-4 mr-2 text-right text-gray-400">{props.text.split("\n").map((_, index) => <span key={index}>{index+1}</span>)}</span> }
-        <pre className="grow p-4 overflow-auto">
-            { language && <RenderPrism code={props.text} language={language} /> || <>{props.text}</> }
+        {
+          linenumbers &&
+          <span className="flex flex-col pl-4 py-4 mr-2 text-right text-gray-400">
+            { props.text.split("\n").map((_, index) => <span className="font-mono" key={index}>{index+1}</span>) }
+          </span>
+        }
+        <pre className={clsx("grow p-4 overflow-auto", font && `font-['${font}']`)}>
+          { language && <RenderPrism code={props.text} language={language} /> || <>{props.text}</> }
         </pre>
         { !filename && <div className="p-2"><Copy text={props.text} /></div> }
       </div>
     </div>
-  );
+        );
 }
 
 type CopyProps = {
@@ -99,6 +105,7 @@ const parseProps = (props: Tokens.Code) => {
   let filename = undefined;
   let preview = false;
   let linenumbers = false;
+  let font = undefined;
   if (props.lang !== undefined) {
     props.lang.split(" ").map((token, index) => {
       if (index === 0 && Object.keys(Prism.languages).includes(token)) {
@@ -115,13 +122,16 @@ const parseProps = (props: Tokens.Code) => {
           case "linenumbers":
             linenumbers =true;
             break;
+          case "font":
+            font = kv[1];
+            break;
           default:
             break;
         }
       }
     });
   }
-  return { language, filename, preview, linenumbers }
+  return { language, filename, preview, linenumbers, font }
 }
 
 type RenderPrismProps = {

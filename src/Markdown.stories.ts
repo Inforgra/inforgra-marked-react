@@ -72,6 +72,9 @@ export const CodePrismMarkdown: Story = {
 export const CodePrismTsx: Story = {
   args: { markdown: "```tsx filename=src/App.tsx linenumbers\nimport { Markdown } from \"inforgra-marked-react\";\n\nexport const App() => {\n  return (<>Hello World!!!</>);\n}\n```" },
 }
+export const CodeFontSourceCodePro: Story = {
+  args: { markdown: "```tsx filename=src/App.tsx linenumbers font=Source_Code_Pro\nimport { Markdown } from \"inforgra-marked-react\";\n\nexport const App() => {\n  return (<>Hello World!!!</>);\n}\n```" },
+}
 
 export const Del: Story = {
   args: { markdown: "~del~" },
