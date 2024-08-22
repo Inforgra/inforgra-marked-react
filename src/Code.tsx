@@ -22,10 +22,7 @@ export const Code = (props: Tokens.Code) => {
         filename
         && (
           <div className="flex border-b p-2">
-            <svg className="w-6 h-6 text-neutral-900 dark:text-neutral-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13 3H5V21H19V9M13 3H14L19 8V9M13 3V7C13 8 14 9 15 9H19" />
-            </svg>
-            <span className="grow font-bold text-gray-900 dark:text-neutral-200">{filename}</span>
+            <span className="grow text-sm mt-1 mx-2">{filename}</span>
             <div className="justify-self-end">
               <Copy text={props.text} />
             </div>
@@ -83,7 +80,7 @@ const Copy = (props: CopyProps) => {
             <path d="M6.08008 15L8.03008 16.95L11.9201 13.05" />
           </svg>
 
-          : <svg className="w-6 h-6 text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
+          : <svg className="w-6 h-6"
                  viewBox="0 0 24 24"
                  fill="none"
                  stroke="currentColor"
