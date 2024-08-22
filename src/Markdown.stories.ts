@@ -123,7 +123,11 @@ export const Image: Story = {
   args: { markdown: "![The San Juan Mountains are beautiful!](https://mdg.imgix.net/assets/images/san-juan-mountains.jpg)" },
 }
 
-export const ImageHTML: Story = {
+export const ImageWithBasePath: Story = {
+  args: { markdown: "![The San Juan Mountains are beautiful!](san-juan-mountains.jpg)", imageBase: "https://mdg.imgix.net/assets/images/"},
+  }
+
+  export const ImageHTML: Story = {
   args: { markdown: "<img src=\"https://mdg.imgix.net/assets/images/san-juan-mountains.jpg\" width=\"200\"/>" },
 }
 

@@ -1,19 +1,20 @@
 import { Tokens } from "marked";
 import { Renderer } from "./Markdown";
 
-type ParagraphProps = {
+type Props = {
   token: Tokens.Paragraph;
   showParagraph?: boolean;
+  imageBase?: string;
 }
 
-export const Paragraph = ({token, showParagraph=true}: ParagraphProps) => {
+export const Paragraph = ({token, showParagraph=true, imageBase}: Props) => {
   const { text, tokens } = token;
   if (showParagraph) {
     return (
       <p className="pb-4">{
         tokens.length === 0
         ? text
-        : <Renderer tokens={tokens} showParagraph={showParagraph}/>
+        : <Renderer tokens={tokens} showParagraph={showParagraph} imageBase={imageBase} />
       }</p>
     );
   } else {
@@ -21,7 +22,7 @@ export const Paragraph = ({token, showParagraph=true}: ParagraphProps) => {
       <>{
         tokens.length === 0
         ? text
-        : <Renderer tokens={tokens} showParagraph={showParagraph}/>
+        : <Renderer tokens={tokens} showParagraph={showParagraph} imageBase={imageBase} />
       }</>
     );
   }

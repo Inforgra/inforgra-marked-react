@@ -34,14 +34,15 @@ marked.use({ extensions: [
 
 export type MarkdownProps = {
   markdown: string;
+  imageBase?: string;
 }
 
-export const Markdown = ({ markdown }: MarkdownProps) => {
+export const Markdown = ({ markdown, imageBase }: MarkdownProps) => {
   resetFootnotes();
   const tokens = marked.Lexer.lex(markdown) as Token[];
   return (
     <>
-      <Renderer tokens={tokens} showParagraph={true} />
+      <Renderer tokens={tokens} showParagraph={true} imageBase={imageBase} />
     </>
   );
 }
@@ -49,13 +50,14 @@ export const Markdown = ({ markdown }: MarkdownProps) => {
 type RendererProps = {
   tokens: Token[];
   showParagraph?: boolean;
+  imageBase?: string;
 }
 
-export const Renderer = ({tokens, showParagraph = true}: RendererProps) => {
+export const Renderer = ({tokens, showParagraph = true, imageBase}: RendererProps) => {
   return (
     <>{
       tokens.map((token, index) => {
-        return <TokenRenderer key={index} token={token} showParagraph={showParagraph} />
+        return <TokenRenderer key={index} token={token} showParagraph={showParagraph} imageBase={imageBase} />
       })
     }</>
   );
@@ -64,10 +66,11 @@ export const Renderer = ({tokens, showParagraph = true}: RendererProps) => {
 type TokenRendererProps = {
   token: Token;
   showParagraph?: boolean;
+  imageBase?: string;
 }
 
 const TokenRenderer = (props: TokenRendererProps) => {
-  const { token, showParagraph } = props;
+  const { token, showParagraph, imageBase } = props;
   switch (token.type) {
     case "alert":
       return <Alert {...token} />;
@@ -98,13 +101,13 @@ const TokenRenderer = (props: TokenRendererProps) => {
     case "blockKatex":
       return <BlockKatex {...(token as Tokens.Generic)} />;
     case "image":
-      return <Image {...(token as Tokens.Image)} />;
+      return <Image {...(token as Tokens.Image)} imageBase={imageBase} />;
     case "link":
       return <Link {...(token as Tokens.Link)} />;
     case "list":
       return <List {...(token as Tokens.List)} />;
     case "paragraph":
-      return <Paragraph token={token as Tokens.Paragraph} showParagraph={showParagraph} />;
+      return <Paragraph token={token as Tokens.Paragraph} showParagraph={showParagraph} imageBase={imageBase} />;
     case "space":
       return <Space />
     case "strong":

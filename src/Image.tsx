@@ -1,8 +1,15 @@
 import { Tokens } from "marked";
 
-export const Image = (props: Tokens.Image) => {
-  const { href, title } = props;
+export type Props = Tokens.Image & { imageBase?: string }
+
+export const Image = ({ href, title, imageBase }: Props) => {
+  console.log(href, title);
   return (
-    <img src={href} alt={title !== null ? title : "" } />
+    <>
+    { title
+    ? <div className="flex flex-col"><img src={ imageBase ? imageBase + href : href } alt={title} /><span className="mx-auto p-4">{title}</span></div>
+    : <img src={ imageBase ? imageBase + href : href } />
+    }
+    </>
   );
 }
