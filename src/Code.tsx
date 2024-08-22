@@ -17,7 +17,7 @@ export const Code = (props: Tokens.Code) => {
   const { language, filename, preview, linenumbers, font } = parseProps(props);
 
   return (
-    <div className="border-2 rounded-lg shadow-md mb-8">
+    <div className="code border-2 rounded-lg shadow-md mb-8">
       {
         filename
         && (
